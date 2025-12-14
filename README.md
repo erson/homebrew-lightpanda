@@ -6,7 +6,7 @@ Unofficial Homebrew tap for [Lightpanda](https://github.com/lightpanda-io/browse
 
 ```bash
 # Add the tap
-brew tap <YOUR_GITHUB_USERNAME>/lightpanda
+brew tap erson/lightpanda
 
 # Install Lightpanda nightly
 brew install --cask lightpanda-nightly
@@ -46,7 +46,7 @@ Then simply run `lpup` to update Lightpanda.
 
 ```bash
 brew uninstall --cask lightpanda-nightly
-brew untap <YOUR_GITHUB_USERNAME>/lightpanda
+brew untap erson/lightpanda
 ```
 
 ## Notes

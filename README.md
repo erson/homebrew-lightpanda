@@ -2,7 +2,7 @@
 
 > **Unofficial Homebrew tap for installing [Lightpanda](https://github.com/lightpanda-io/browser) on macOS.**
 
-This repository provides a Homebrew cask formula for easy installation and updates of Lightpanda. It downloads binaries directly from the [official Lightpanda releases](https://github.com/lightpanda-io/browser/releases) - no modifications are made to the original binaries.
+This repository provides Homebrew cask formulas for easy installation and updates of Lightpanda. It downloads binaries directly from the [official Lightpanda releases](https://github.com/lightpanda-io/browser/releases) - no modifications are made to the original binaries.
 
 ## What is Lightpanda?
 
@@ -19,19 +19,33 @@ This repository provides a Homebrew cask formula for easy installation and updat
 
 The cask automatically detects your Mac's architecture and downloads the appropriate binary.
 
+## Available Casks
+
+| Cask | Description | Version Tracking |
+|------|-------------|-----------------|
+| `lightpanda` | Latest stable release with versioning and SHA256 verification | Automatic via `livecheck` |
+| `lightpanda-nightly` | Nightly build from the `nightly` release tag | Manual (`--greedy`) |
+
 ## Installation
 
 ### Prerequisites
 
 - [Homebrew](https://brew.sh/) must be installed on your system
 
-### Install Lightpanda
+### Install Lightpanda (Stable)
 
 ```bash
 # Add this tap to Homebrew
 brew tap erson/lightpanda
 
-# Install Lightpanda nightly build
+# Install latest stable release (recommended)
+brew install --cask lightpanda
+```
+
+### Install Lightpanda (Nightly)
+
+```bash
+brew tap erson/lightpanda
 brew install --cask lightpanda-nightly
 ```
 
@@ -47,43 +61,28 @@ lightpanda fetch --dump https://example.com
 
 ## Updating
 
-This tap tracks the **nightly release** from the official repository. Since nightly builds use a fixed URL without version numbers, Homebrew cannot automatically detect when updates are available.
+### Stable Release
 
-### Manual Update
+The stable cask uses `livecheck` to automatically detect new releases:
 
-Use the `--greedy` flag to force Homebrew to reinstall the latest nightly build:
+```bash
+brew upgrade --cask lightpanda
+```
+
+### Nightly Build
+
+Since nightly builds use a fixed URL without version numbers, use the `--greedy` flag:
 
 ```bash
 brew upgrade --cask --greedy lightpanda-nightly
-```
-
-### Update All Casks
-
-To update Homebrew and all greedy casks at once:
-
-```bash
-brew update && brew upgrade --cask --greedy
-```
-
-### Quick Alias (Optional)
-
-Add a convenient alias to your shell configuration (`~/.zshrc` or `~/.bashrc`):
-
-```bash
-# Add this line to your shell config
-alias lpup="brew update && brew upgrade --cask --greedy lightpanda-nightly"
-```
-
-Then reload your shell and use:
-
-```bash
-lpup
 ```
 
 ## Uninstall
 
 ```bash
 # Remove Lightpanda
+brew uninstall --cask lightpanda
+# or
 brew uninstall --cask lightpanda-nightly
 
 # Remove the tap (optional)
@@ -92,13 +91,12 @@ brew untap erson/lightpanda
 
 ## How It Works
 
-This Homebrew cask:
+This Homebrew tap provides two casks:
 
-1. Downloads the appropriate binary from [Lightpanda's official nightly release](https://github.com/lightpanda-io/browser/releases/tag/nightly)
-2. Places the binary in Homebrew's bin directory (`/opt/homebrew/bin/` on Apple Silicon, `/usr/local/bin/` on Intel)
-3. Creates a symlink named `lightpanda` for easy command-line access
+- **`lightpanda`** (stable): Downloads versioned releases with SHA256 checksum verification. Uses Homebrew's `livecheck` to detect new versions automatically.
+- **`lightpanda-nightly`**: Downloads the latest nightly build from a fixed URL. Uses `version :latest` and `sha256 :no_check` since the binary changes with each build.
 
-The cask uses `version :latest` and `sha256 :no_check` because the nightly release URL remains constant while the binary content changes with each build.
+Both casks place the binary in Homebrew's bin directory and create a `lightpanda` symlink for easy command-line access.
 
 ## Troubleshooting
 
@@ -121,21 +119,13 @@ source ~/.zshrc
 If you encounter issues, try a clean reinstall:
 
 ```bash
-brew uninstall --cask lightpanda-nightly
-brew install --cask lightpanda-nightly
+brew uninstall --cask lightpanda
+brew install --cask lightpanda
 ```
-
-## Future Plans
-
-When Lightpanda releases stable, versioned builds, this tap will be updated to include:
-
-- A versioned cask with proper SHA256 checksums
-- Automatic update detection via `livecheck`
-- Potentially a Homebrew formula for building from source
 
 ## Disclaimer
 
-This is an **unofficial** community-maintained Homebrew tap. It is not affiliated with or endorsed by the Lightpanda team. 
+This is an **unofficial** community-maintained Homebrew tap. It is not affiliated with or endorsed by the Lightpanda team.
 
 - **Source code & issues**: [lightpanda-io/browser](https://github.com/lightpanda-io/browser)
 - **Official documentation**: [lightpanda.io](https://lightpanda.io)
